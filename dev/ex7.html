@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training Programs</title>
+    <style>
+        *{
+            
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+        body{
+            background: linear-gradient(to right,rgb(50, 50, 176) 0%,rgb(8, 98, 182) 100%);
+        }
+        button{
+            border-radius: 7px;
+            color: #fff;
+            background-color: rgb(11, 13, 13);
+            padding: 5px;
+        }
+        input[type='text'], select{
+            border-radius: 7px;
+            padding: 5px;
+        }
+        h3{
+            background: linear-gradient(to top,rgb(162, 162, 222) 0%,rgb(163, 192, 219) 100%);
+            width: fit-content;
+        }
+        .program-section {
+            margin-bottom: 20px;
+        }
+        .program-section h3 {
+            margin-bottom: 10px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 5px;
+            color: azure;
+        }
+        label{
+            color: azure;   
+        }
+    </style>
+</head>
+<body>
+
+<h2>Training Programs</h2>
+
+<div class="program-section" id="program1">
+    <h3>Program 1</h3>
+    <ul>
+        <li>Javascript</li>
+        <li>Database</li>
+    </ul>
+</div>
+
+<div class="program-section" id="program2">
+    <h3>Program 2</h3>
+    <ul>
+        <li>AI</li>
+        <li>static website</li>
+    </ul>
+</div>
+
+<div class="program-section" id="program3">
+    <h3>Program 3</h3>
+    <ul>
+        <li>dynamic website</li>
+        <li>Algorithm</li>
+    </ul>
+</div>
+
+<div class="program-section" id="program4">
+    <h3>Program 4</h3>
+    <ul>
+        <li>English</li>
+        <li>French</li>
+    </ul>
+</div>
+
+<h3>Add or Remove Module/Program</h3>
+
+<form id="modifyForm">
+    <label for="programSelect">Select Program:</label>
+    <select id="programSelect" name="programSelect">
+        <option value="program1">Program 1</option>
+        <option value="program2">Program 2</option>
+        <option value="program3">Program 3</option>
+        <option value="program4">Program 4</option>
+    </select>
+    <br><br>
+    
+    <label for="moduleInput">Module:</label>
+    <input type="text" id="moduleInput" name="moduleInput" placeholder="Enter module name">
+    <br><br>
+    
+    <button type="button" onclick="addModule()">Add Module</button>
+    <button type="button" onclick="removeModule()">Remove Module</button>
+</form>
+
+<script >
+    function addModule() {
+    const programSelect = document.getElementById('programSelect').value;
+    const moduleInput = document.getElementById('moduleInput').value;
+
+    if (moduleInput.trim() === '') {
+        alert('Please enter a module name.');
+        return;
+    }
+
+    const programSection = document.getElementById(programSelect);
+    const ul = programSection.querySelector('ul');
+    const li = document.createElement('li');
+    li.textContent = moduleInput;
+
+    ul.appendChild(li);
+    document.getElementById('moduleInput').value = ''; // Clear input field
+}
+
+function removeModule() {
+    const programSelect = document.getElementById('programSelect').value;
+    const moduleInput = document.getElementById('moduleInput').value;
+
+    if (moduleInput.trim() === '') {
+        alert('Please enter a module name.');
+        return;
+    }
+
+    const programSection = document.getElementById(programSelect);
+    const ul = programSection.querySelector('ul');
+    const items = ul.getElementsByTagName('li');
+
+    for (let i = 0; i < items.length; i++) {
+        if (items[i].textContent === moduleInput) {
+            ul.removeChild(items[i]);
+            document.getElementById('moduleInput').value = ''; // Clear input field
+            return;
+        }
+    }
+
+    alert('Module not found.');
+}
+
+</script>
+
+</body>
+</html>

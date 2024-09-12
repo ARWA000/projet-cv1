@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>liste de stagiaires</title>
+    <style>
+        body{
+            background-color: rgb(75, 75, 194);
+        }
+        input[type='button']{
+            border-radius: 7px;
+            color: #fff;
+            background-color: rgb(11, 13, 13);
+            padding: 5px;
+        }
+        input[type='text'], select{
+            border-radius: 7px;
+            padding: 5px;
+        }
+        h1,h3{
+            color: rgb(63, 230, 230);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        h3{
+            font-size: 24px;
+        }
+        #affiche{
+            border: 2px solid white;
+        }
+        td{
+            color: antiquewhite;
+        }
+        tr{
+            border-radius: 5px;
+        }
+    </style>
+    <script>
+        Stagiaires=[]
+        indice=0
+        function naviguer(i){
+            document.getElementById('cin').value=Stagiaires[i].cin
+            document.getElementById('nom').value=Stagiaires[i].nom
+            document.getElementById('prenom').value=Stagiaires[i].prenom
+
+            if( document.getElementById('H').value==Stagiaires[i].sexe)
+                  document.getElementById('H').checked=true
+            else
+                  document.getElementById('F').checked=true
+            document.getElementById('niveau').value=Stagiaires[i].niveau
+            //---------- Les checkBox --------------//
+            if(Stagiaires[i].activite.includes(document.getElementById('sport').value))
+                  document.getElementById('sport').checked=true
+            else
+                  document.getElementById('sport').checked=false
+             //---------- Les checkBox --------------//
+             if(Stagiaires[i].activite.includes(document.getElementById('voyage').value))
+                  document.getElementById('voyage').checked=true
+            else
+                  document.getElementById('voyage').checked=false
+             //---------- Les checkBox --------------//
+             if(Stagiaires[i].activite.includes(document.getElementById('jeu').value))
+                  document.getElementById('jeu').checked=true
+            else
+                  document.getElementById('jeu').checked=false
+             //---------- Les checkBox --------------//
+             if(Stagiaires[i].activite.includes(document.getElementById('lecture').value))
+                  document.getElementById('lecture').checked=true
+            else
+                  document.getElementById('lecture').checked=false
+        }
+        function premier(){
+            indice=0
+            naviguer(indice)
+        }
+        function dernier(){
+            indice=Stagiaires.length-1
+            naviguer(indice)
+        }
+        function precedent(){
+           if(indice >0){
+            indice--
+            naviguer(indice)
+           }
+        }
+        function suivant(){
+            if(indice < Stagiaires.length-1){
+            indice++
+            naviguer(indice)
+           }
+        }
+        function rechercher(cinn){
+            k=-1
+            for(let i=0;i<Stagiaires.length;i++){
+                if(Stagiaires[i].cin==cinn){
+                    k=i
+                    break
+                }
+            }
+            return k
+        }
+        function ajouter(){
+            p=rechercher(document.getElementById('cin').value)
+            if(p!=-1){
+                alert('ce stagiaire est dejà existe !!')
+            }
+            else{
+                v={}
+                v.cin=document.getElementById('cin').value
+                v.nom=document.getElementById('nom').value
+                v.prenom=document.getElementById('prenom').value
+                v.sexe=document.f.s.value
+                v.niveau=document.getElementById('niveau').value
+                v.activite=''
+                if(document.getElementById('sport').checked)
+                      v.activite+=document.getElementById('sport').value+','
+                if(document.getElementById('jeu').checked)
+                      v.activite+=document.getElementById('jeu').value+','
+                if(document.getElementById('voyage').checked)
+                      v.activite+=document.getElementById('voyage').value+','
+                if(document.getElementById('lecture').checked)
+                      v.activite+=document.getElementById('lecture').value+','
+                Stagiaires.push(v)
+                alert('opération réussie ')
+            }
+        }
+        function modifier(){
+            p=rechercher(document.getElementById('cin').value)
+            if(p==-1){
+                alert('ce stagiaire n existe pas!!')
+            }
+            else{
+                Stagiaires[p].nom=document.getElementById('nom').value
+                Stagiaires[p].prenom=document.getElementById('prenom').value
+                Stagiaires[p].sexe=document.f.s.value
+                Stagiaires[p].niveau=document.getElementById('niveau').value
+                Stagiaires[p].activite=''
+                if(document.getElementById('sport').checked)
+                     Stagiaires[p].activite+=document.getElementById('sport').value+','
+                if(document.getElementById('jeu').checked)
+                      Stagiaires[p].activite+=document.getElementById('jeu').value+','
+                if(document.getElementById('voyage').checked)
+                      Stagiaires[p].activite+=document.getElementById('voyage').value+','
+                if(document.getElementById('lecture').checked)
+                      Stagiaires[p].activite+=document.getElementById('lecture').value+','
+                
+                alert('opération réussie ')
+            }
+        }
+        function supprimer(){
+            p=rechercher(document.getElementById('cin').value)
+            if(p==-1){
+                alert('ce stagiaire n existe pas!!')
+            }
+            else{
+                // Stagiaires.splice(p,1)
+                for(let i=p;i<Stagiaires.length-1;i++)
+                       Stagiaires[i]=Stagiaires[i+1]
+                Stagiaires.pop()
+                 alert('opération da7ka')
+            }
+        }
+        function ligne(v){
+            return '<tr><td>'+v.cin+'</td><td>'+v.nom+'</td><td>'+v.prenom+'</td><td>'+v.sexe+'</td><td>'+v.niveau+'</td><td>'+v.activite+'</td></tr>'
+        }
+        function affichage(){
+            t='<tr><td>Cin</td><td>Nom</td><td>Prenom</td><td>Sexe</td><td>Niveau</td><td>Activite</td></tr>'
+            for(let i=0;i<Stagiaires.length;i++)
+                  t+=ligne(Stagiaires[i])
+            document.getElementById('affiche').innerHTML=t
+        }
+    </script>
+</head>
+<body>
+    <center>
+        <h1> Inscription des Stagiaires</h1>
+    <form name="f">
+        <table>
+            <tr> <td></td>  <td>Cin:</td>   <td><input type="text" id="cin"> </td>  <td></td>  </tr>
+            <tr> <td></td>  <td>Nom:</td>   <td><input type="text" id="nom"> </td>  <td></td>  </tr>
+            <tr> <td></td> <td>Prenom:</td>   <td><input type="text" id="prenom"> </td>  <td></td>  </tr>
+            <tr> <td><input type="button" value="Premier" onclick="premier()"></td>  <td>Sexe :</td>   <td><input type="radio" name="s" value="Homme" id="H" checked>Homme<input type="radio" name="s" value="Femme" id="F">Femme </td>  <td><input type="button" value="Suivant" onclick="suivant()"></td>  </tr>
+            <tr> <td><input type="button" value="Precedent" onclick="precedent()"></td>  <td>Niveau :</td>   <td><select id="niveau"><option value="TS">TS</option><option value="T">T</option><option value="Q">Q</option><option value="S">S</option> </select> </td>  <td><input type="button" value="Dernier" onclick="dernier()"></td>  </tr>
+            <tr> <td></td>  <td>Activite :</td>   <td><input type="checkbox" id="sport" value="Sport">Sport <input type="checkbox" id="voyage" value="Voyage">Voyage<br><input type="checkbox" id="jeu" value="Jeu">Jeu<input type="checkbox" id="lecture" value="Lecture">Lecture </td>  <td></td>  </tr>
+            <tr> <td></td>  <td><input type="button" value="Ajouter" onclick="ajouter()"><input type="button" value="Modifier" onclick="modifier()"> </td>   <td><input type="button" value="Supprimer" onclick="supprimer()"><input type="button" value="Afficher" onclick="affichage()"></td>  <td></td>  </tr>
+        </table>
+    </form>
+    <h3>La liste des Stagiaires inscrits</h3>
+    <table border="1px" id="affiche">
+
+    </table>
+    </center>
+</body>
+</html>
